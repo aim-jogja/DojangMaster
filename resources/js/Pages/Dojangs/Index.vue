@@ -61,6 +61,9 @@ const deleteDojang = (id) => {
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Status
                                 </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                                    Plan
+                                </th>
                                 <th class="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                                     Aksi
                                 </th>
@@ -94,8 +97,30 @@ const deleteDojang = (id) => {
                                         {{ dojang.is_active ? 'Aktif' : 'Nonaktif' }}
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium text-gray-900">
+                                        {{ dojang.subscription?.plan?.name ?? 'Free' }}
+                                    </div>
+                                    <span
+                                        class="rounded-full px-2 py-1 text-xs font-medium"
+                                        :class="{
+                                            'bg-green-100 text-green-700': dojang.subscription?.status === 'active',
+                                            'bg-gray-100 text-gray-700': dojang.subscription?.status === 'free',
+                                            'bg-yellow-100 text-yellow-700': dojang.subscription?.status === 'overdue',
+                                            'bg-red-100 text-red-700': ['cancelled', 'expired'].includes(dojang.subscription?.status),
+                                        }"
+                                    >
+                                        {{ dojang.subscription?.status ?? 'free' }}
+                                    </span>
+                                </td>
 
                                 <td class="space-x-2 px-6 py-4 text-right text-sm">
+                                    <Link
+                                        :href="route('dojangs.subscription.edit', dojang.id)"
+                                        class="text-emerald-600 hover:text-emerald-900"
+                                    >
+                                        Paket
+                                    </Link>
                                     <Link
                                         :href="route('dojangs.show', dojang.id)"
                                         class="text-gray-600 hover:text-gray-900"

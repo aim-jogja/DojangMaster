@@ -51,6 +51,17 @@ class RolePermissionSeeder extends Seeder
             'create payment categories',
             'edit payment categories',
             'delete payment categories',
+
+            // Feature and Subscription
+            'features.view',
+            'features.create',
+            'features.edit',
+            'features.delete',
+
+            'subscription_plans.view',
+            'subscription_plans.create',
+            'subscription_plans.edit',
+            'subscription_plans.delete',
         ];
 
         foreach ($permissions as $permission) {

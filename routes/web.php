@@ -14,7 +14,11 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PaymentCategoryController;
 use App\Http\Controllers\StudentBillController;
 use App\Http\Controllers\StudentPaymentController;
-
+use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\SubscriptionPlanController;
+use App\Http\Controllers\DojangSubscriptionController;
+use App\Http\Controllers\DojangPaymentController;
+use App\Http\Controllers\OwnerBillingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +38,44 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'redirect'])
         ->name('dashboard');
+});
+
+Route::middleware(['auth', 'verified', 'role:super_admin'])
+    ->group(function () {
+        Route::resource('features', FeatureController::class);
+        Route::resource('subscription-plans', SubscriptionPlanController::class);
+
+        Route::get('/dojangs/{dojang}/subscription/edit', [DojangSubscriptionController::class, 'edit'])
+            ->name('dojangs.subscription.edit');
+
+        Route::put('/dojangs/{dojang}/subscription', [DojangSubscriptionController::class, 'update'])
+            ->name('dojangs.subscription.update');
+        
+        Route::get('/dojang-payments', [DojangPaymentController::class, 'index'])
+            ->name('dojang-payments.index');
+    
+        Route::post('/dojang-payments/generate-monthly', [DojangPaymentController::class, 'generateMonthly'])
+            ->name('dojang-payments.generate-monthly');
+    
+        Route::get('/dojang-payments/{dojangPayment}', [DojangPaymentController::class, 'show'])
+            ->name('dojang-payments.show');
+    
+        Route::patch('/dojang-payments/{dojangPayment}/mark-as-paid', [DojangPaymentController::class, 'markAsPaid'])
+            ->name('dojang-payments.mark-as-paid');
+    
+        Route::patch('/dojang-payments/{dojangPayment}/mark-as-failed', [DojangPaymentController::class, 'markAsFailed'])
+            ->name('dojang-payments.mark-as-failed');
+    
+        Route::patch('/dojang-payments/{dojangPayment}/cancel', [DojangPaymentController::class, 'cancel'])
+            ->name('dojang-payments.cancel');
+});
+
+Route::middleware(['auth', 'role:owner'])->group(function () {
+    Route::get('/billing', [OwnerBillingController::class, 'index'])
+        ->name('owner.billing.index');
+
+    Route::get('/billing/{dojangPayment}', [OwnerBillingController::class, 'show'])
+        ->name('owner.billing.show');
 });
 
 Route::middleware(['auth', 'verified', 'role:super_admin|owner'])

@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             UserRoleSeeder::class,
             AttendanceSimulationSeeder::class,
+            FeatureSeeder::class,
+            SubscriptionPlanSeeder::class,
         ]);
     }
 }

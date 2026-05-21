@@ -192,6 +192,58 @@ const navGroups = [
             },
         ],
     },
+    {
+        label: 'Subscription',
+        items: [
+            {
+                name: 'Plans',
+                route: 'subscription-plans.index',
+                activePattern: 'subscription-plans.*',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+                </svg>`,
+                role: ['super_admin'],
+            },
+            {
+                name: 'Features',
+                route: 'features.index',
+                activePattern: 'features.*',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l1.5 3 3.25.47-2.35 2.29.55 3.24-2.95-1.55-2.95 1.55.55-3.24L6.5 7.97l3.25-.47 1.5-3z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5h15" />
+                </svg>`,
+                role: ['super_admin'],
+            },
+        ],
+    },
+    {
+        label: 'Billing',
+        items: [
+            {
+                name: 'Dojang Payments',
+                route: 'dojang-payments.index',
+                activePattern: 'dojang-payments.*',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+                </svg>`,
+                role: ['super_admin'],
+            },
+        ],
+    },
+    {
+        label: 'Billing',
+        items: [
+            {
+                name: 'Billing',
+                route: 'owner.billing.index',
+                activePattern: 'owner.billing.*',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+                </svg>`,
+                role: ['owner'],
+            },
+        ],
+    }
 ];
 </script>
 

@@ -58,4 +58,58 @@ class Dojang extends Model
     {
         return $this->hasMany(DojangPayment::class);
     }
+
+    public function subscription()
+    {
+        return $this->hasOne(DojangSubscription::class);
+    }
+
+    public function currentPlan()
+    {
+        return $this->subscription?->plan;
+    }
+
+    public function canUseFeature(string $featureCode): bool
+    {
+        $plan = $this->currentPlan();
+
+        if (! $plan || ! $plan->is_active) {
+            return false;
+        }
+
+        return $plan->hasFeature($featureCode);
+    }
+
+    public function hasReachedRoomLimit(): bool
+    {
+        $plan = $this->currentPlan();
+
+        if (! $plan || is_null($plan->max_rooms)) {
+            return false;
+        }
+
+        return $this->rooms()->count() >= $plan->max_rooms;
+    }
+
+    public function hasReachedStudentLimit(): bool
+    {
+        $plan = $this->currentPlan();
+
+        if (! $plan || is_null($plan->max_students)) {
+            return false;
+        }
+
+        return $this->users()->count() >= $plan->max_students;
+    }
+
+    public function hasReachedTrainerLimit(): bool
+    {
+        $plan = $this->currentPlan();
+
+        if (! $plan || is_null($plan->max_trainers)) {
+            return false;
+        }
+
+        return $this->trainers()->count() >= $plan->max_trainers;
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dojang;
 use App\Models\User;
+use App\Models\SubscriptionPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -15,7 +16,7 @@ class DojangController extends Controller
         $user = Auth::user();
 
         $dojangs = Dojang::query()
-            ->with('owner:id,name,email')
+            ->with(['owner:id,name,email', 'subscription.plan'])
             ->when($user->hasRole('owner'), function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
@@ -64,7 +65,17 @@ class DojangController extends Controller
 
         abort_unless($owner->hasRole('owner'), 422, 'User yang dipilih bukan owner.');
 
-        Dojang::create($validated);
+        $dojang = Dojang::create($validated);
+        $freePlan = SubscriptionPlan::where('code', 'free')->first();
+
+        if ($freePlan) {
+            $dojang->subscription()->create([
+                'subscription_plan_id' => $freePlan->id,
+                'started_at' => now()->toDateString(),
+                'expired_at' => null,
+                'status' => 'free',
+            ]);
+        }
 
         return redirect()
             ->route('dojangs.index')
