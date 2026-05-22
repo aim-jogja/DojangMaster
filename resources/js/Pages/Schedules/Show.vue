@@ -12,117 +12,215 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Detail Schedule / Jadwal
-            </h2>
+            <div class="flex items-center gap-2 min-w-0">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 text-indigo-500 shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"
+                    />
+                </svg>
+
+                <h2 class="font-semibold text-gray-800 text-base truncate">
+                    Detail Jadwal
+                </h2>
+            </div>
         </template>
 
-        <div class="py-6">
-            <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
-                <div class="rounded bg-white p-6 shadow">
-                    <div class="mb-6">
-                        <h1 class="text-2xl font-bold text-gray-900">
-                            {{ schedule.room?.name ?? '-' }}
-                        </h1>
+        <div class="space-y-5">
+            <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                    <h1 class="text-2xl font-bold text-gray-900 truncate">
+                        {{ schedule.room?.name ?? '-' }}
+                    </h1>
 
-                        <p class="text-sm text-gray-500">
-                            {{ schedule.room?.dojang?.name ?? '-' }}
+                    <p class="text-sm text-gray-500 mt-0.5">
+                        {{ schedule.room?.dojang?.name ?? '-' }}
+                    </p>
+                </div>
+
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border bg-indigo-50 text-indigo-700 border-indigo-100 shrink-0">
+                    {{ schedule.day }}
+                </span>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-800">
+                            Informasi Jadwal
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            Detail room, hari, dan jam latihan
                         </p>
                     </div>
 
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-5">
                     <dl class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                        <div>
-                            <dt class="text-sm font-medium text-gray-500">
+                        <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                            <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
                                 Hari
                             </dt>
-                            <dd class="mt-1 text-gray-900">
+                            <dd class="mt-1 text-sm font-semibold text-gray-900">
                                 {{ schedule.day }}
                             </dd>
                         </div>
 
-                        <div>
-                            <dt class="text-sm font-medium text-gray-500">
+                        <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                            <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
                                 Jam Mulai
                             </dt>
-                            <dd class="mt-1 text-gray-900">
+                            <dd class="mt-1 text-sm font-semibold text-gray-900">
                                 {{ schedule.start_time }}
                             </dd>
                         </div>
 
-                        <div>
-                            <dt class="text-sm font-medium text-gray-500">
+                        <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                            <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
                                 Jam Selesai
                             </dt>
-                            <dd class="mt-1 text-gray-900">
+                            <dd class="mt-1 text-sm font-semibold text-gray-900">
                                 {{ schedule.end_time }}
                             </dd>
                         </div>
                     </dl>
+                </div>
+            </div>
 
-                    <div class="mt-8">
-                        <h3 class="mb-3 text-lg font-semibold text-gray-900">
+            <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-800">
                             Riwayat Absensi
                         </h3>
-
-                        <div v-if="schedule.attendances?.length" class="overflow-hidden rounded border">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-sm text-gray-500">
-                                            Tanggal
-                                        </th>
-                                        <th class="px-4 py-2 text-left text-sm text-gray-500">
-                                            Siswa
-                                        </th>
-                                        <th class="px-4 py-2 text-left text-sm text-gray-500">
-                                            Status
-                                        </th>
-                                        <th class="px-4 py-2 text-left text-sm text-gray-500">
-                                            Catatan
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr v-for="attendance in schedule.attendances" :key="attendance.id">
-                                        <td class="px-4 py-2 text-sm">
-                                            {{ attendance.date }}
-                                        </td>
-                                        <td class="px-4 py-2 text-sm">
-                                            {{ attendance.student?.name ?? '-' }}
-                                        </td>
-                                        <td class="px-4 py-2 text-sm">
-                                            {{ attendance.status }}
-                                        </td>
-                                        <td class="px-4 py-2 text-sm">
-                                            {{ attendance.note ?? '-' }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <p v-else class="text-sm text-gray-500">
-                            Belum ada data absensi untuk jadwal ini.
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            Data absensi yang terhubung dengan jadwal ini
                         </p>
                     </div>
 
-                    <div class="mt-6 flex justify-end gap-2">
-                        <Link
-                            :href="route('schedules.index')"
-                            class="rounded border px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                        >
-                            Kembali
-                        </Link>
+                    <span class="text-xs text-gray-400 shrink-0">
+                        {{ schedule.attendances?.length ?? 0 }} item
+                    </span>
+                </div>
 
-                        <Link
-                            :href="route('schedules.edit', schedule.id)"
-                            class="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+                <div v-if="schedule.attendances?.length" class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left">
+                        <thead>
+                            <tr class="border-b border-gray-100 bg-gray-50">
+                                <th class="px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Tanggal
+                                </th>
+                                <th class="px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Siswa
+                                </th>
+                                <th class="px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Status
+                                </th>
+                                <th class="px-5 py-3.5 text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Catatan
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-gray-50">
+                            <tr
+                                v-for="attendance in schedule.attendances"
+                                :key="attendance.id"
+                                class="hover:bg-gray-50/70 transition-colors"
+                            >
+                                <td class="px-5 py-4 text-sm font-medium text-gray-900">
+                                    {{ attendance.date }}
+                                </td>
+
+                                <td class="px-5 py-4">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-semibold text-xs uppercase shrink-0">
+                                            {{ attendance.student?.name?.charAt(0) ?? 'S' }}
+                                        </div>
+
+                                        <span class="font-semibold text-gray-900">
+                                            {{ attendance.student?.name ?? '-' }}
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td class="px-5 py-4">
+                                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full border bg-gray-50 text-gray-700 border-gray-100 capitalize">
+                                        {{ attendance.status }}
+                                    </span>
+                                </td>
+
+                                <td class="px-5 py-4 text-sm text-gray-700">
+                                    {{ attendance.note ?? '-' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div v-else class="py-12 text-center">
+                    <div class="flex flex-col items-center gap-3 text-gray-400">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-10 h-10 text-gray-300"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.5"
                         >
-                            Edit
-                        </Link>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                        </svg>
+
+                        <p class="text-sm font-medium">
+                            Belum ada data absensi untuk jadwal ini
+                        </p>
                     </div>
                 </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-2">
+                <Link
+                    :href="route('schedules.index')"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+                >
+                    Kembali
+                </Link>
+
+                <Link
+                    :href="route('schedules.edit', schedule.id)"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-indigo-700 active:scale-95 transition-all"
+                >
+                    Edit
+                </Link>
             </div>
         </div>
     </AuthenticatedLayout>

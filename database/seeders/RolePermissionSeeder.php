@@ -3,14 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         $permissions = [
             // Dojang
@@ -35,33 +36,36 @@ class RolePermissionSeeder extends Seeder
             'manage attendances',
             'view attendances',
 
-            // Student Payment
+            // Student Billing & Payment
+            'manage student bills',
+            'view student bills',
             'manage student payments',
             'view student payments',
 
-            // Dojang Payment / SaaS Payment
-            'manage dojang payments',
-            'view dojang payments',
-
-            // Role & Permission
-            'manage roles',
-
-            // Student Payment
+            // Payment Category
             'view payment categories',
             'create payment categories',
             'edit payment categories',
             'delete payment categories',
 
-            // Feature and Subscription
+            // Dojang Payment / SaaS Billing
+            'manage dojang payments',
+            'view dojang payments',
+
+            // Feature
             'features.view',
             'features.create',
             'features.edit',
             'features.delete',
 
+            // Subscription Plan
             'subscription_plans.view',
             'subscription_plans.create',
             'subscription_plans.edit',
             'subscription_plans.delete',
+
+            // Role & Permission
+            'manage roles',
         ];
 
         foreach ($permissions as $permission) {
@@ -91,18 +95,8 @@ class RolePermissionSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
-        /**
-         * Super Admin
-         * Pemilik platform SaaS.
-         * Boleh mengelola semua data.
-         */
         $superAdmin->syncPermissions($permissions);
 
-        /**
-         * Owner
-         * Pemilik dojang.
-         * Boleh mengelola dojang miliknya, room, jadwal, pelatih, siswa, absensi, dan pembayaran siswa.
-         */
         $owner->syncPermissions([
             'manage dojangs',
             'view dojangs',
@@ -122,41 +116,40 @@ class RolePermissionSeeder extends Seeder
             'manage attendances',
             'view attendances',
 
+            'manage student bills',
+            'view student bills',
             'manage student payments',
             'view student payments',
+
+            'view payment categories',
+            'create payment categories',
+            'edit payment categories',
+            'delete payment categories',
 
             'view dojang payments',
         ]);
 
-        /**
-         * Trainer
-         * Pelatih.
-         * Fokus ke jadwal, siswa, dan absensi.
-         */
         $trainer->syncPermissions([
             'view dojangs',
-
             'view rooms',
             'view schedules',
-
             'view students',
 
             'manage attendances',
             'view attendances',
 
+            'view student bills',
             'view student payments',
         ]);
 
-        /**
-         * Student
-         * Murid.
-         * Hanya melihat jadwal, absensi pribadi, dan pembayaran pribadi.
-         */
         $student->syncPermissions([
             'view rooms',
             'view schedules',
             'view attendances',
+            'view student bills',
             'view student payments',
         ]);
+
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 }

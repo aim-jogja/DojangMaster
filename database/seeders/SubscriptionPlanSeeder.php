@@ -76,7 +76,7 @@ class SubscriptionPlanSeeder extends Seeder
                     'reports',
                     'export_reports',
                     'custom_domain',
-                    'whatsapp_remainder',
+                    'whatsapp_reminder',
                 ],
             ],
         ];
@@ -87,11 +87,21 @@ class SubscriptionPlanSeeder extends Seeder
                 $item['data']
             );
 
-            $featureIds = Feature::whereIn('code', $item['features'])
-                ->pluck('id')
-                ->toArray();
+            $features = Feature::query()
+                ->whereIn('code', $item['features'])
+                ->get(['id', 'code']);
 
-            $plan->features()->sync($featureIds);
+            $missingFeatures = collect($item['features'])
+                ->diff($features->pluck('code'))
+                ->values();
+
+            if ($missingFeatures->isNotEmpty()) {
+                $this->command?->warn(
+                    'Feature belum ditemukan untuk plan ' . $plan->code . ': ' . $missingFeatures->implode(', ')
+                );
+            }
+
+            $plan->features()->sync($features->pluck('id')->toArray());
         }
     }
 }

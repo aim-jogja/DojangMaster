@@ -1,313 +1,1254 @@
-<script setup>
-import { Head, Link } from '@inertiajs/vue3';
-
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-});
-</script>
-
 <template>
-    <Head title="Welcome" />
-
-    <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
-    >
-        <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
-            <Link
-                v-if="$page.props.auth.user"
-                :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                >Dashboard</Link
-            >
-
-            <template v-else>
-                <Link
-                    :href="route('login')"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Log in</Link
-                >
-
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Register</Link
-                >
-            </template>
-        </div>
-
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
-            <div class="flex justify-center">
-                <svg
-                    viewBox="0 0 62 65"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-16 w-auto bg-gray-100 dark:bg-gray-900"
-                >
-                    <path
-                        d="M61.8548 14.6253C61.8778 14.7102 61.8895 14.7978 61.8897 14.8858V28.5615C61.8898 28.737 61.8434 28.9095 61.7554 29.0614C61.6675 29.2132 61.5409 29.3392 61.3887 29.4265L49.9104 36.0351V49.1337C49.9104 49.4902 49.7209 49.8192 49.4118 49.9987L25.4519 63.7916C25.3971 63.8227 25.3372 63.8427 25.2774 63.8639C25.255 63.8714 25.2338 63.8851 25.2101 63.8913C25.0426 63.9354 24.8666 63.9354 24.6991 63.8913C24.6716 63.8838 24.6467 63.8689 24.6205 63.8589C24.5657 63.8389 24.5084 63.8215 24.456 63.7916L0.501061 49.9987C0.348882 49.9113 0.222437 49.7853 0.134469 49.6334C0.0465019 49.4816 0.000120578 49.3092 0 49.1337L0 8.10652C0 8.01678 0.0124642 7.92953 0.0348998 7.84477C0.0423783 7.8161 0.0598282 7.78993 0.0697995 7.76126C0.0884958 7.70891 0.105946 7.65531 0.133367 7.6067C0.152063 7.5743 0.179485 7.54812 0.20192 7.51821C0.230588 7.47832 0.256763 7.43719 0.290416 7.40229C0.319084 7.37362 0.356476 7.35243 0.388883 7.32751C0.425029 7.29759 0.457436 7.26518 0.498568 7.2415L12.4779 0.345059C12.6296 0.257786 12.8015 0.211853 12.9765 0.211853C13.1515 0.211853 13.3234 0.257786 13.475 0.345059L25.4531 7.2415H25.4556C25.4955 7.26643 25.5292 7.29759 25.5653 7.32626C25.5977 7.35119 25.6339 7.37362 25.6625 7.40104C25.6974 7.43719 25.7224 7.47832 25.7523 7.51821C25.7735 7.54812 25.8021 7.5743 25.8196 7.6067C25.8483 7.65656 25.8645 7.70891 25.8844 7.76126C25.8944 7.78993 25.9118 7.8161 25.9193 7.84602C25.9423 7.93096 25.954 8.01853 25.9542 8.10652V33.7317L35.9355 27.9844V14.8846C35.9355 14.7973 35.948 14.7088 35.9704 14.6253C35.9792 14.5954 35.9954 14.5692 36.0053 14.5405C36.0253 14.4882 36.0427 14.4346 36.0702 14.386C36.0888 14.3536 36.1163 14.3274 36.1375 14.2975C36.1674 14.2576 36.1923 14.2165 36.2272 14.1816C36.2559 14.1529 36.292 14.1317 36.3244 14.1068C36.3618 14.0769 36.3942 14.0445 36.4341 14.0208L48.4147 7.12434C48.5663 7.03694 48.7383 6.99094 48.9133 6.99094C49.0883 6.99094 49.2602 7.03694 49.4118 7.12434L61.3899 14.0208C61.4323 14.0457 61.4647 14.0769 61.5021 14.1055C61.5333 14.1305 61.5694 14.1529 61.5981 14.1803C61.633 14.2165 61.6579 14.2576 61.6878 14.2975C61.7103 14.3274 61.7377 14.3536 61.7551 14.386C61.7838 14.4346 61.8 14.4882 61.8199 14.5405C61.8312 14.5692 61.8474 14.5954 61.8548 14.6253ZM59.893 27.9844V16.6121L55.7013 19.0252L49.9104 22.3593V33.7317L59.8942 27.9844H59.893ZM47.9149 48.5566V37.1768L42.2187 40.4299L25.953 49.7133V61.2003L47.9149 48.5566ZM1.99677 9.83281V48.5566L23.9562 61.199V49.7145L12.4841 43.2219L12.4804 43.2194L12.4754 43.2169C12.4368 43.1945 12.4044 43.1621 12.3682 43.1347C12.3371 43.1097 12.3009 43.0898 12.2735 43.0624L12.271 43.0586C12.2386 43.0275 12.2162 42.9888 12.1887 42.9539C12.1638 42.9203 12.1339 42.8916 12.114 42.8567L12.1127 42.853C12.0903 42.8156 12.0766 42.7707 12.0604 42.7283C12.0442 42.6909 12.023 42.656 12.013 42.6161C12.0005 42.5688 11.998 42.5177 11.9931 42.4691C11.9881 42.4317 11.9781 42.3943 11.9781 42.3569V15.5801L6.18848 12.2446L1.99677 9.83281ZM12.9777 2.36177L2.99764 8.10652L12.9752 13.8513L22.9541 8.10527L12.9752 2.36177H12.9777ZM18.1678 38.2138L23.9574 34.8809V9.83281L19.7657 12.2459L13.9749 15.5801V40.6281L18.1678 38.2138ZM48.9133 9.14105L38.9344 14.8858L48.9133 20.6305L58.8909 14.8846L48.9133 9.14105ZM47.9149 22.3593L42.124 19.0252L37.9323 16.6121V27.9844L43.7219 31.3174L47.9149 33.7317V22.3593ZM24.9533 47.987L39.59 39.631L46.9065 35.4555L36.9352 29.7145L25.4544 36.3242L14.9907 42.3482L24.9533 47.987Z"
-                        fill="#FF2D20"
-                    />
+    <div>
+      <!-- ══ NAVBAR ══ -->
+      <nav class="navbar" :class="{ scrolled: isScrolled }">
+        <div class="container">
+          <div class="navbar-inner">
+            <!-- Logo -->
+            <a href="#" class="logo">
+              <div class="logo-icon">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="20,2 38,12 38,28 20,38 2,28 2,12" fill="none" stroke="#c8a84b" stroke-width="1.5"/>
+                  <polygon points="20,8 32,15 32,25 20,32 8,25 8,15" fill="rgba(200,168,75,0.1)" stroke="#c8a84b" stroke-width="0.5"/>
+                  <text x="50%" y="54%" font-family="Bebas Neue" font-size="14" fill="#c8a84b" text-anchor="middle" dominant-baseline="middle">DM</text>
                 </svg>
+              </div>
+              <div class="logo-text">Dojang <span>Master</span></div>
+            </a>
+  
+            <!-- Desktop Nav -->
+            <ul class="nav-links">
+              <li><a href="#features">Fitur</a></li>
+              <li><a href="#how">Cara Kerja</a></li>
+              <li><a href="#pricing">Harga</a></li>
+              <li><a href="#testimonials">Testimoni</a></li>
+            </ul>
+  
+            <!-- Desktop Actions -->
+            <div class="nav-actions">
+              <a href="/login" class="btn-login">Login</a>
+              <a href="#pricing" class="btn-cta">Mulai Gratis</a>
             </div>
-
-            <div class="mt-16">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    <a
-                        href="https://laravel.com/docs"
-                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                    >
-                        <div>
-                            <div
-                                class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    class="w-7 h-7 stroke-red-500"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                                    />
-                                </svg>
-                            </div>
-
-                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Documentation</h2>
-
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Laravel has wonderful documentation covering every aspect of the framework. Whether you
-                                are a newcomer or have prior experience with Laravel, we recommend reading our
-                                documentation from beginning to end.
-                            </p>
-                        </div>
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                            />
-                        </svg>
-                    </a>
-
-                    <a
-                        href="https://laracasts.com"
-                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                    >
-                        <div>
-                            <div
-                                class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    class="w-7 h-7 stroke-red-500"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
-                                    />
-                                </svg>
-                            </div>
-
-                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laracasts</h2>
-
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
-                                development. Check them out, see for yourself, and massively level up your development
-                                skills in the process.
-                            </p>
-                        </div>
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                            />
-                        </svg>
-                    </a>
-
-                    <a
-                        href="https://laravel-news.com"
-                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                    >
-                        <div>
-                            <div
-                                class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    class="w-7 h-7 stroke-red-500"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"
-                                    />
-                                </svg>
-                            </div>
-
-                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Laravel News</h2>
-
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Laravel News is a community driven portal and newsletter aggregating all of the latest
-                                and most important news in the Laravel ecosystem, including new package releases and
-                                tutorials.
-                            </p>
-                        </div>
-
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            class="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                            />
-                        </svg>
-                    </a>
-
-                    <div
-                        class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                    >
-                        <div>
-                            <div
-                                class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    class="w-7 h-7 stroke-red-500"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M6.115 5.19l.319 1.913A6 6 0 008.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 002.288-4.042 1.087 1.087 0 00-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 01-.98-.314l-.295-.295a1.125 1.125 0 010-1.591l.13-.132a1.125 1.125 0 011.3-.21l.603.302a.809.809 0 001.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 001.528-1.732l.146-.292M6.115 5.19A9 9 0 1017.18 4.64M6.115 5.19A8.965 8.965 0 0112 3c1.929 0 3.716.607 5.18 1.64"
-                                    />
-                                </svg>
-                            </div>
-
-                            <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</h2>
-
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Laravel's robust library of first-party tools and libraries, such as
-                                <a
-                                    href="https://forge.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Forge</a
-                                >,
-                                <a
-                                    href="https://vapor.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Vapor</a
-                                >,
-                                <a
-                                    href="https://nova.laravel.com"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Nova</a
-                                >, and
-                                <a
-                                    href="https://envoyer.io"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Envoyer</a
-                                >
-                                help you take your projects to the next level. Pair them with powerful open source
-                                libraries like
-                                <a
-                                    href="https://laravel.com/docs/billing"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Cashier</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/dusk"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Dusk</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/broadcasting"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Echo</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/horizon"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Horizon</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/sanctum"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Sanctum</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/telescope"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Telescope</a
-                                >, and more.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-center mt-16 px-6 sm:items-center sm:justify-between">
-                <div class="text-center text-sm sm:text-start">&nbsp;</div>
-
-                <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-end sm:ms-0">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </div>
-            </div>
+  
+            <!-- Hamburger -->
+            <button
+              class="hamburger"
+              :class="{ open: menuOpen }"
+              @click="menuOpen = !menuOpen"
+              aria-label="Menu"
+            >
+              <span></span><span></span><span></span>
+            </button>
+          </div>
         </div>
+  
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" :class="{ open: menuOpen }">
+          <ul>
+            <li><a href="#features" @click="menuOpen = false">Fitur</a></li>
+            <li><a href="#how" @click="menuOpen = false">Cara Kerja</a></li>
+            <li><a href="#pricing" @click="menuOpen = false">Harga</a></li>
+            <li><a href="#testimonials" @click="menuOpen = false">Testimoni</a></li>
+          </ul>
+          <div class="mobile-actions">
+            <a href="/login" class="btn-login">Login</a>
+            <a href="#pricing" class="btn-cta" @click="menuOpen = false">Mulai Gratis</a>
+          </div>
+        </div>
+      </nav>
+  
+      <!-- ══ HERO ══ -->
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-diagonal"></div>
+        <div class="hero-line"></div>
+  
+        <div class="container">
+          <div class="hero-inner">
+            <div class="hero-content">
+              <div class="hero-badge">
+                <div class="hero-badge-dot"></div>
+                <span class="tag">Platform SaaS Dojang #1 Indonesia</span>
+              </div>
+  
+              <h1 class="hero-title">
+                Kelola<br>
+                <span class="line-gold">Dojang</span><br>
+                Anda<br>
+                <span class="line-red">Tanpa Batas</span>
+              </h1>
+  
+              <p class="hero-desc">
+                Satu platform lengkap untuk manajemen anggota, jadwal latihan, pembayaran, dan promosi sabuk. Dirancang khusus untuk dojang Taekwondo profesional.
+              </p>
+  
+              <div class="hero-actions">
+                <a href="#pricing" class="btn-cta">Coba Gratis 14 Hari</a>
+                <a href="#how" class="btn-cta-outline">Lihat Demo</a>
+              </div>
+  
+              <div class="hero-stat-row">
+                <div>
+                  <div class="stat-num">500+</div>
+                  <div class="stat-lbl">Dojang Aktif</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div>
+                  <div class="stat-num">45K+</div>
+                  <div class="stat-lbl">Atlet Terkelola</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div>
+                  <div class="stat-num">98%</div>
+                  <div class="stat-lbl">Tingkat Retensi</div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Dashboard Preview -->
+            <div class="hero-visual">
+              <div class="hero-card-stack">
+                <div class="dashboard-card">
+                  <div class="card-header">
+                    <span class="card-title">Anggota Aktif Hari Ini</span>
+                    <span class="card-status">Live</span>
+                  </div>
+  
+                  <div class="member-row">
+                    <div class="avatar">AR</div>
+                    <div class="member-info">
+                      <div class="member-name">Ahmad Ridwan</div>
+                      <div class="member-belt">Sabuk Merah · 3 thn</div>
+                    </div>
+                    <span class="member-badge badge-active">Aktif</span>
+                  </div>
+                  <div class="member-row">
+                    <div class="avatar">SD</div>
+                    <div class="member-info">
+                      <div class="member-name">Sari Dewi</div>
+                      <div class="member-belt">Sabuk Hijau · 1 thn</div>
+                    </div>
+                    <span class="member-badge badge-active">Aktif</span>
+                  </div>
+                  <div class="member-row">
+                    <div class="avatar">BW</div>
+                    <div class="member-info">
+                      <div class="member-name">Bayu Wicaksono</div>
+                      <div class="member-belt">Sabuk Putih · Baru</div>
+                    </div>
+                    <span class="member-badge badge-trial">Trial</span>
+                  </div>
+  
+                  <div class="metric-row">
+                    <div class="metric-box">
+                      <div class="metric-val">142</div>
+                      <div class="metric-lbl">Anggota</div>
+                    </div>
+                    <div class="metric-box">
+                      <div class="metric-val">12</div>
+                      <div class="metric-lbl">Sesi/Minggu</div>
+                    </div>
+                    <div class="metric-box">
+                      <div class="metric-val">97%</div>
+                      <div class="metric-lbl">Lunas</div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="floating-card">
+                  <div class="floating-num">+18%</div>
+                  <div class="floating-lbl">Pendapatan bulan ini</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ FEATURES ══ -->
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-header fade-up">
+            <span class="tag">Fitur Unggulan</span>
+            <h2 class="section-title">Semua Yang Anda<br><span class="gold">Butuhkan</span></h2>
+            <p class="section-desc">Dari manajemen sabuk hingga laporan keuangan — semuanya dalam satu dashboard yang intuitif.</p>
+          </div>
+  
+          <div class="features-grid">
+            <div
+              v-for="(f, i) in features"
+              :key="i"
+              class="feature-card fade-up"
+            >
+              <div class="feature-number">0{{ i + 1 }}</div>
+              <div class="feature-icon" v-html="f.icon"></div>
+              <div class="feature-name">{{ f.name }}</div>
+              <div class="feature-desc">{{ f.desc }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ HOW IT WORKS ══ -->
+      <section class="section how-section" id="how">
+        <div class="container">
+          <div class="how-grid">
+            <div>
+              <span class="tag">Cara Kerja</span>
+              <h2 class="section-title" style="text-align:left; margin:12px 0 40px;">
+                Mulai dalam<br><span class="gold">3 Langkah</span>
+              </h2>
+              <div class="step-list">
+                <div
+                  v-for="(s, i) in steps"
+                  :key="i"
+                  class="step-item fade-up"
+                >
+                  <div class="step-num">0{{ i + 1 }}</div>
+                  <div class="step-content">
+                    <div class="step-name">{{ s.name }}</div>
+                    <div class="step-desc">{{ s.desc }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="how-visual fade-up">
+              <span class="tag" style="display:block; margin-bottom:24px;">Distribusi Sabuk</span>
+              <div class="belt-rank-display">
+                <div v-for="b in belts" :key="b.name" class="belt-row">
+                  <div class="belt-color" :style="{ background: b.color }"></div>
+                  <div class="belt-name">{{ b.name }}</div>
+                  <div class="belt-count">{{ b.count }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ PRICING ══ -->
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="section-header fade-up">
+            <span class="tag">Paket Harga</span>
+            <h2 class="section-title">Pilih Paket<br><span class="gold">Yang Tepat</span></h2>
+            <p class="section-desc">Harga transparan tanpa biaya tersembunyi. Upgrade atau downgrade kapan saja.</p>
+          </div>
+  
+          <div class="pricing-grid">
+            <div
+              v-for="(p, i) in plans"
+              :key="i"
+              class="price-card fade-up"
+              :class="{ featured: p.featured }"
+            >
+              <div class="price-label">
+                {{ p.name }}
+                <span v-if="p.featured" class="popular-tag">TERPOPULER</span>
+              </div>
+              <div class="price-amount"><sup>Rp</sup>{{ p.price }}</div>
+              <div class="price-period">per bulan · {{ p.members }}</div>
+              <ul class="price-features">
+                <li
+                  v-for="(f, j) in p.features"
+                  :key="j"
+                  :class="{ active: f.included }"
+                >
+                  <svg v-if="f.included" class="check-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <svg v-else class="cross-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ f.text }}
+                </li>
+              </ul>
+              <a href="#" :class="['btn-price', { 'featured-btn': p.featured }]">{{ p.cta }}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ TESTIMONIALS ══ -->
+      <section class="section testi-section" id="testimonials">
+        <div class="container">
+          <div class="section-header fade-up">
+            <span class="tag">Testimoni</span>
+            <h2 class="section-title">Dipercaya Para<br><span class="gold">Pelatih Profesional</span></h2>
+          </div>
+          <div class="testi-grid">
+            <div
+              v-for="(t, i) in testimonials"
+              :key="i"
+              class="testi-card fade-up"
+            >
+              <div class="quote-mark">"</div>
+              <p class="testi-text">{{ t.text }}</p>
+              <div class="testi-author">
+                <div class="testi-avatar">{{ t.initial }}</div>
+                <div>
+                  <div class="testi-name">{{ t.name }}</div>
+                  <div class="testi-role">{{ t.role }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ CTA ══ -->
+      <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-line-top"></div>
+        <div class="cta-line-bottom"></div>
+        <div class="container" style="position:relative; z-index:2;">
+          <span class="tag">Mulai Sekarang</span>
+          <h2 class="section-title">Siap Membawa Dojang Anda<br><span class="gold">ke Level Berikutnya?</span></h2>
+          <p class="section-desc" style="margin: 0 auto 40px;">
+            Bergabunglah dengan 500+ dojang yang telah mempercayakan manajemen mereka kepada Dojang Master.
+          </p>
+          <div class="cta-actions">
+            <a href="#pricing" class="btn-cta-large">Mulai Gratis 14 Hari</a>
+            <a href="#" class="btn-cta-outline">Jadwalkan Demo</a>
+          </div>
+        </div>
+      </section>
+  
+      <!-- ══ FOOTER ══ -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <a href="#" class="logo" style="display:inline-flex;">
+                <div class="logo-icon">
+                  <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="20,2 38,12 38,28 20,38 2,28 2,12" fill="none" stroke="#c8a84b" stroke-width="1.5"/>
+                    <text x="50%" y="54%" font-family="Bebas Neue" font-size="14" fill="#c8a84b" text-anchor="middle" dominant-baseline="middle">DM</text>
+                  </svg>
+                </div>
+                <div class="logo-text">Dojang <span>Master</span></div>
+              </a>
+              <p class="footer-tagline">Platform manajemen dojang Taekwondo terlengkap untuk Indonesia.</p>
+            </div>
+            <div>
+              <div class="footer-col-title">Produk</div>
+              <ul class="footer-links">
+                <li><a href="#">Fitur</a></li>
+                <li><a href="#">Harga</a></li>
+                <li><a href="#">Keamanan</a></li>
+                <li><a href="#">API</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title">Perusahaan</div>
+              <ul class="footer-links">
+                <li><a href="#">Tentang Kami</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Karir</a></li>
+                <li><a href="#">Kontak</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title">Dukungan</div>
+              <ul class="footer-links">
+                <li><a href="#">Dokumentasi</a></li>
+                <li><a href="#">Pusat Bantuan</a></li>
+                <li><a href="#">Status</a></li>
+                <li><a href="#">Komunitas</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <div class="footer-copy">© 2024 Dojang Master. Hak cipta dilindungi.</div>
+            <div class="footer-legal">
+              <a href="#">Privasi</a>
+              <a href="#">Syarat &amp; Ketentuan</a>
+              <a href="#">Cookie</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-</template>
-
-<style>
-.bg-dots-darker {
-    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-}
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-dots-lighter {
-        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-    }
-}
-</style>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted, onUnmounted } from 'vue'
+  
+  // ── Reactive state ──────────────────────────────────────────────────────────
+  const isScrolled = ref(false)
+  const menuOpen   = ref(false)
+  
+  // ── Scroll handler ──────────────────────────────────────────────────────────
+  const handleScroll = () => {
+    isScrolled.value = window.scrollY > 40
+  }
+  
+  // ── Fade-up intersection observer ───────────────────────────────────────────
+  onMounted(() => {
+    window.addEventListener('scroll', handleScroll)
+  
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible')
+            obs.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.12 }
+    )
+    document.querySelectorAll('.fade-up').forEach((el) => obs.observe(el))
+  })
+  
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+  })
+  
+  // ── Static data ─────────────────────────────────────────────────────────────
+  const features = [
+    {
+      name: 'Manajemen Anggota',
+      desc: 'Data lengkap setiap atlet: foto, riwayat sabuk, absensi, dan dokumen. Semua terpusat dan mudah diakses kapan saja.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6 38c0-6.627 5.373-12 12-12h8c6.627 0 12 5.373 12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="34" cy="14" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M38 28h2c4 0 7 2.686 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>`,
+    },
+    {
+      name: 'Jadwal & Kelas',
+      desc: 'Kelola jadwal latihan harian, kelas khusus, dan sesi ujian sabuk dengan kalender visual yang mudah dikonfigurasi.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="10" width="36" height="32" rx="2" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6 18h36M16 6v8M32 6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="14" y="24" width="6" height="6" rx="1" fill="currentColor" opacity="0.4"/>
+        <rect x="24" y="24" width="6" height="6" rx="1" fill="currentColor" opacity="0.4"/>
+        <rect x="14" y="34" width="6" height="4" rx="1" fill="currentColor" opacity="0.2"/>
+      </svg>`,
+    },
+    {
+      name: 'Pembayaran Otomatis',
+      desc: 'Tagihan iuran bulanan otomatis dengan notifikasi WhatsApp/email. Pantau status pembayaran secara real-time.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="12" width="40" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M4 20h40" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="10" y="26" width="10" height="6" rx="1" fill="currentColor" opacity="0.4"/>
+        <circle cx="34" cy="29" r="3" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="38" cy="29" r="3" stroke="currentColor" stroke-width="1.5"/>
+      </svg>`,
+    },
+    {
+      name: 'Sistem Sabuk & Promosi',
+      desc: 'Rekam pencapaian sabuk setiap atlet, jadwalkan ujian, dan kirim sertifikat digital otomatis setelah promosi.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 6l4 10h10l-8 6 3 10-9-6-9 6 3-10-8-6h10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M16 34l-4 8h24l-4-8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" opacity="0.5"/>
+      </svg>`,
+    },
+    {
+      name: 'Laporan & Analitik',
+      desc: 'Dashboard analitik lengkap: tren pertumbuhan anggota, pendapatan, tingkat kehadiran, dan prediksi churn.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 38V28M14 38V20M22 38V24M30 38V14M38 38V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M6 28l8-8 8 4 8-10 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      </svg>`,
+    },
+    {
+      name: 'Komunikasi Atlet',
+      desc: 'Kirim pengumuman, pengingat latihan, dan hasil evaluasi langsung ke semua anggota via WhatsApp atau email.',
+      icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 8h32a2 2 0 012 2v20a2 2 0 01-2 2H16l-8 6V10a2 2 0 012-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M16 20h16M16 26h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>`,
+    },
+  ]
+  
+  const steps = [
+    {
+      name: 'Daftarkan Dojang Anda',
+      desc: 'Buat akun dalam 2 menit. Masukkan info dojang Anda dan sistem langsung siap digunakan.',
+    },
+    {
+      name: 'Input Data Anggota',
+      desc: 'Import data anggota existing via CSV atau input satu per satu. Profil sabuk langsung terkonfigurasi.',
+    },
+    {
+      name: 'Kelola & Pantau',
+      desc: 'Gunakan dashboard untuk memantau semua aktivitas, pembayaran, dan perkembangan atlet secara real-time.',
+    },
+  ]
+  
+  const belts = [
+    { name: 'Sabuk Hitam',  color: '#1a1a1a', count: 8  },
+    { name: 'Sabuk Merah',  color: '#c0392b', count: 14 },
+    { name: 'Sabuk Biru',   color: '#2980b9', count: 22 },
+    { name: 'Sabuk Hijau',  color: '#27ae60', count: 31 },
+    { name: 'Sabuk Kuning', color: '#f39c12', count: 38 },
+    { name: 'Sabuk Putih',  color: '#ecf0f1', count: 29 },
+  ]
+  
+  const plans = [
+    {
+      name: 'Starter',
+      price: '149K',
+      members: 'Hingga 50 anggota',
+      featured: false,
+      cta: 'Mulai Gratis',
+      features: [
+        { text: 'Manajemen 50 anggota',  included: true  },
+        { text: 'Jadwal & absensi',      included: true  },
+        { text: 'Laporan dasar',         included: true  },
+        { text: 'Pembayaran otomatis',   included: false },
+        { text: 'Multi pelatih',         included: false },
+        { text: 'API akses',             included: false },
+      ],
+    },
+    {
+      name: 'Professional',
+      price: '349K',
+      members: 'Hingga 200 anggota',
+      featured: true,
+      cta: 'Pilih Professional',
+      features: [
+        { text: 'Manajemen 200 anggota', included: true  },
+        { text: 'Jadwal & absensi',      included: true  },
+        { text: 'Laporan lengkap',       included: true  },
+        { text: 'Pembayaran otomatis',   included: true  },
+        { text: 'Multi pelatih (5)',      included: true  },
+        { text: 'API akses',             included: false },
+      ],
+    },
+    {
+      name: 'Enterprise',
+      price: 'Custom',
+      members: 'Anggota tak terbatas',
+      featured: false,
+      cta: 'Hubungi Kami',
+      features: [
+        { text: 'Anggota tak terbatas',          included: true },
+        { text: 'Jadwal & absensi',              included: true },
+        { text: 'Laporan & analitik lanjutan',   included: true },
+        { text: 'Pembayaran otomatis',           included: true },
+        { text: 'Multi pelatih tak terbatas',    included: true },
+        { text: 'API akses penuh',               included: true },
+      ],
+    },
+  ]
+  
+  const testimonials = [
+    {
+      text: 'Sejak pakai Dojang Master, saya tidak perlu lagi repot dengan spreadsheet. Pembayaran iuran terpantau otomatis dan anggota pun lebih disiplin karena ada pengingat otomatis.',
+      name: 'Pelatih Hendra S.',
+      role: 'Kepala Pelatih · Dojang Garuda Jakarta',
+      initial: 'HS',
+    },
+    {
+      text: 'Fitur rekap sabuk dan jadwal ujian sangat membantu. Semua histori pencapaian atlet tersimpan rapi. Dashboard-nya intuitif, bahkan staf administrasi saya bisa langsung paham.',
+      name: 'Kuswanto, S.Pd.',
+      role: 'Owner · Taekwondo Club Surabaya',
+      initial: 'KW',
+    },
+    {
+      text: 'Laporan keuangan bulanan yang rapi membuat saya bisa lebih fokus melatih. Dojang Master benar-benar menghemat waktu administratif saya lebih dari 10 jam per minggu.',
+      name: 'Master Yunita R.',
+      role: 'Pelatih Bersertifikat · Dojang Elang Bandung',
+      initial: 'YR',
+    },
+  ]
+  </script>
+  
+  <style>
+  /* ── Google Fonts ── */
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500&display=swap');
+  
+  :root {
+    --black: #0a0a0b;
+    --carbon: #111214;
+    --iron: #1a1c20;
+    --steel: #252830;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-dim: #8a7030;
+    --red: #c0392b;
+    --red-glow: #e74c3c;
+    --white: #f0ede8;
+    --muted: #7a7872;
+    --border: rgba(200, 168, 75, 0.15);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+  }
+  
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+  
+  /* ── UTILITY ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .gold { color: var(--gold); }
+  .tag {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  
+  /* ══════════════════════════════════
+     NAVBAR
+  ══════════════════════════════════ */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    transition: all 0.4s ease;
+  }
+  .navbar.scrolled {
+    background: rgba(10, 10, 11, 0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-icon { width: 40px; height: 40px; position: relative; }
+  .logo-icon svg { width: 100%; height: 100%; }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .logo-text span { color: var(--gold); }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  
+  .btn-login {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 9px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-login:hover {
+    border-color: var(--gold);
+    background: rgba(200, 168, 75, 0.08);
+    color: var(--gold-light);
+  }
+  
+  .btn-cta {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 9px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-cta:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .btn-cta-outline {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    border: 1px solid var(--gold);
+    padding: 14px 36px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-cta-outline:hover { background: rgba(200, 168, 75, 0.1); }
+  
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--white);
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  
+  .mobile-menu {
+    display: none;
+    background: var(--carbon);
+    border-top: 1px solid var(--border);
+    padding: 24px;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+  .mobile-menu a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu .mobile-actions {
+    display: flex; flex-direction: column; gap: 12px; margin-top: 28px;
+  }
+  .mobile-menu .btn-login,
+  .mobile-menu .btn-cta { text-align: center; }
+  
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 0 80px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 50%, rgba(192, 57, 43, 0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 80% at 5% 50%, rgba(200, 168, 75, 0.04) 0%, transparent 70%),
+      linear-gradient(180deg, var(--black) 0%, var(--carbon) 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200, 168, 75, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200, 168, 75, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  }
+  .hero-diagonal {
+    position: absolute;
+    top: 0; right: -10%;
+    width: 45%; height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(200, 168, 75, 0.02) 50%, transparent 100%);
+    transform: skewX(-8deg);
+    pointer-events: none;
+  }
+  .hero-line {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 14px 6px 8px;
+    margin-bottom: 32px;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+  .hero-title .line-gold { color: var(--gold); }
+  .hero-title .line-red {
+    color: var(--white);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  }
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .hero-stat-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .hero-stat-divider { width: 1px; height: 36px; background: var(--border-subtle); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  
+  /* Hero Visual */
+  .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-card-stack { position: relative; width: 100%; max-width: 420px; }
+  .dashboard-card {
+    background: var(--iron);
+    border: 1px solid var(--border-subtle);
+    border-radius: 2px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+  }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .card-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .card-status {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #4caf50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-status::before { content: ''; width: 5px; height: 5px; background: #4caf50; border-radius: 50%; }
+  .member-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .member-row:last-child { border-bottom: none; }
+  .avatar {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--steel));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .member-info { flex: 1; }
+  .member-name { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 14px; color: var(--white); }
+  .member-belt { font-size: 11px; color: var(--muted); }
+  .member-badge {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 1px;
+  }
+  .badge-active { background: rgba(76, 175, 80, 0.15); color: #4caf50; }
+  .badge-trial  { background: rgba(200, 168, 75, 0.15); color: var(--gold); }
+  .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+  .metric-box { background: var(--steel); padding: 12px; text-align: center; }
+  .metric-val { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); letter-spacing: 0.05em; }
+  .metric-lbl {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .floating-card {
+    position: absolute;
+    right: -24px; bottom: -20px;
+    background: var(--steel);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    min-width: 160px;
+    animation: floatY 4s ease-in-out infinite;
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .floating-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red-glow); letter-spacing: 0.05em; }
+  .floating-lbl {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  
+  /* ══════════════════════════════════
+     FEATURES
+  ══════════════════════════════════ */
+  .section { padding: 100px 0; position: relative; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin: 12px 0 16px;
+  }
+  .section-desc { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-subtle); }
+  .feature-card {
+    background: var(--carbon);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .feature-card:hover { background: var(--iron); }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+  .feature-card:hover::before { width: 100%; }
+  .feature-number { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: var(--gold-dim); margin-bottom: 24px; }
+  .feature-icon { width: 48px; height: 48px; margin-bottom: 20px; color: var(--gold); }
+  .feature-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.05em; color: var(--white); margin-bottom: 12px; }
+  .feature-desc { font-size: 14px; line-height: 1.65; color: var(--muted); }
+  
+  /* ══════════════════════════════════
+     HOW IT WORKS
+  ══════════════════════════════════ */
+  .how-section { background: var(--carbon); }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .step-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+    cursor: default;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--iron);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: right;
+    transition: color 0.3s;
+  }
+  .step-item:hover .step-num { color: var(--gold-dim); }
+  .step-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.05em; color: var(--white); margin-bottom: 6px; }
+  .step-desc { font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .how-visual {
+    background: var(--iron);
+    border: 1px solid var(--border-subtle);
+    padding: 40px;
+    position: relative;
+  }
+  .how-visual::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 32px 32px 0;
+    border-color: transparent var(--carbon) transparent transparent;
+  }
+  .belt-rank-display { display: flex; flex-direction: column; gap: 12px; }
+  .belt-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--steel); transition: all 0.3s; }
+  .belt-row:hover { background: var(--black); }
+  .belt-color { width: 48px; height: 8px; border-radius: 1px; flex-shrink: 0; }
+  .belt-name { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 14px; color: var(--white); flex: 1; }
+  .belt-count { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--gold); letter-spacing: 0.05em; }
+  
+  /* ══════════════════════════════════
+     PRICING
+  ══════════════════════════════════ */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-subtle); max-width: 960px; margin: 0 auto; }
+  .price-card { background: var(--carbon); padding: 40px 32px; position: relative; overflow: hidden; }
+  .price-card.featured { background: var(--iron); z-index: 1; margin: -1px 0; }
+  .price-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .price-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .price-label .popular-tag { background: var(--gold); color: var(--black); font-size: 9px; padding: 2px 8px; letter-spacing: 0.12em; }
+  .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--white); letter-spacing: 0.02em; line-height: 1; margin-bottom: 4px; }
+  .price-amount sup { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 600; vertical-align: super; margin-right: 2px; }
+  .price-period { font-family: 'Rajdhani', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .price-features li { font-family: 'Rajdhani', sans-serif; font-weight: 500; font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+  .price-features li.active { color: var(--white); }
+  .check-icon { color: var(--gold); flex-shrink: 0; }
+  .cross-icon { color: #444; flex-shrink: 0; }
+  .btn-price {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    width: 100%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+  }
+  .btn-price:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .btn-price.featured-btn { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .btn-price.featured-btn:hover { background: var(--gold-light); }
+  
+  /* ══════════════════════════════════
+     TESTIMONIALS
+  ══════════════════════════════════ */
+  .testi-section { background: var(--black); }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-subtle); }
+  .testi-card { background: var(--carbon); padding: 36px 32px; }
+  .quote-mark { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: var(--gold-dim); line-height: 0.6; margin-bottom: 20px; }
+  .testi-text { font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 24px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--gold-dim), var(--steel));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--gold-light);
+  }
+  .testi-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 15px; color: var(--white); }
+  .testi-role { font-size: 12px; color: var(--muted); }
+  
+  /* ══════════════════════════════════
+     CTA SECTION
+  ══════════════════════════════════ */
+  .cta-section { position: relative; padding: 120px 0; overflow: hidden; text-align: center; }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200, 168, 75, 0.06) 0%, transparent 70%),
+      var(--carbon);
+  }
+  .cta-line-top, .cta-line-bottom {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+  .cta-line-top { top: 0; }
+  .cta-line-bottom { bottom: 0; }
+  .cta-section .section-title { margin-bottom: 16px; }
+  .cta-section .section-desc { margin-bottom: 40px; }
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .btn-cta-large {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 16px 48px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-cta-large:hover { background: var(--gold-light); border-color: var(--gold-light); }
+  
+  /* ══════════════════════════════════
+     FOOTER
+  ══════════════════════════════════ */
+  .footer { background: var(--black); border-top: 1px solid var(--border-subtle); padding: 64px 0 32px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-tagline { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 16px; max-width: 240px; }
+  .footer-col-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 20px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid var(--border-subtle); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-copy { font-size: 13px; color: var(--muted); }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .footer-legal a:hover { color: var(--gold); }
+  
+  /* ══════════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════════ */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  
+  /* ══════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-inner { gap: 48px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .price-card.featured { margin: 0; }
+  }
+  @media (max-width: 768px) {
+    .nav-links, .nav-actions { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { display: none; }
+    .hero { padding: 100px 0 60px; min-height: auto; }
+    .hero-stat-row { gap: 20px; }
+    .how-grid { grid-template-columns: 1fr; }
+    .how-visual { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .section { padding: 64px 0; }
+  }
+  @media (max-width: 480px) {
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .btn-cta, .btn-cta-outline { width: 100%; text-align: center; }
+    .cta-actions { flex-direction: column; }
+  }
+  </style>

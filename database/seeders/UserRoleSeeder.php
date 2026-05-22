@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Dojang;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -22,7 +22,6 @@ class UserRoleSeeder extends Seeder
 
         $superAdmin->syncRoles(['super_admin']);
 
-
         $owner = User::updateOrCreate(
             ['email' => 'owner@example.com'],
             [
@@ -32,7 +31,6 @@ class UserRoleSeeder extends Seeder
         );
 
         $owner->syncRoles(['owner']);
-
 
         $dojang = Dojang::updateOrCreate(
             ['domain' => 'dojang-demo'],
@@ -45,7 +43,6 @@ class UserRoleSeeder extends Seeder
             ]
         );
 
-
         $trainer = User::updateOrCreate(
             ['email' => 'trainer@example.com'],
             [
@@ -57,28 +54,21 @@ class UserRoleSeeder extends Seeder
 
         $trainer->syncRoles(['trainer']);
 
-
-        $student = User::firstOrCreate(
+        $student = User::updateOrCreate(
             ['email' => 'student@example.com'],
             [
                 'dojang_id' => $dojang->id,
                 'name' => 'Student Demo',
                 'password' => Hash::make('password'),
-                'qr_token' => (string) Str::uuid(),
             ]
         );
-        
-        $student->update([
-            'dojang_id' => $dojang->id,
-            'name' => 'Student Demo',
-        ]);
-        
-        if (!$student->qr_token) {
-            $student->update([
+
+        if (! $student->qr_token) {
+            $student->forceFill([
                 'qr_token' => (string) Str::uuid(),
-            ]);
+            ])->save();
         }
-        
+
         $student->syncRoles(['student']);
     }
 }

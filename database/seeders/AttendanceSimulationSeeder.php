@@ -11,28 +11,12 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 
 class AttendanceSimulationSeeder extends Seeder
 {
     public function run(): void
     {
         DB::transaction(function () {
-            Role::firstOrCreate([
-                'name' => 'student',
-                'guard_name' => 'web',
-            ]);
-
-            Role::firstOrCreate([
-                'name' => 'trainer',
-                'guard_name' => 'web',
-            ]);
-
-            Role::firstOrCreate([
-                'name' => 'owner',
-                'guard_name' => 'web',
-            ]);
-
             $owner = User::updateOrCreate(
                 ['email' => 'owner-flow@example.com'],
                 [
@@ -44,9 +28,10 @@ class AttendanceSimulationSeeder extends Seeder
             $owner->syncRoles(['owner']);
 
             $dojang = Dojang::updateOrCreate(
-                ['name' => 'Dojang Flow Demo'],
+                ['domain' => 'dojang-flow-demo'],
                 [
                     'user_id' => $owner->id,
+                    'name' => 'Dojang Flow Demo',
                     'address' => 'Jl. Demo Attendance',
                     'phone' => '081234567890',
                     'is_active' => true,
@@ -68,17 +53,11 @@ class AttendanceSimulationSeeder extends Seeder
                 [
                     'name' => 'Kelas Pemula',
                     'description' => 'Room untuk siswa baru.',
+                    'registration_fee' => 50000,
+                    'monthly_fee' => 100000,
                     'schedules' => [
-                        [
-                            'day' => 'monday',
-                            'start_time' => '16:00:00',
-                            'end_time' => '17:30:00',
-                        ],
-                        [
-                            'day' => 'wednesday',
-                            'start_time' => '16:00:00',
-                            'end_time' => '17:30:00',
-                        ],
+                        ['day' => 'monday', 'start_time' => '16:00:00', 'end_time' => '17:30:00'],
+                        ['day' => 'wednesday', 'start_time' => '16:00:00', 'end_time' => '17:30:00'],
                     ],
                     'students' => [
                         ['name' => 'Alya Pemula', 'email' => 'alya.pemula@example.com', 'status' => 'present'],
@@ -89,17 +68,11 @@ class AttendanceSimulationSeeder extends Seeder
                 [
                     'name' => 'Kelas Menengah',
                     'description' => 'Room untuk siswa tingkat menengah.',
+                    'registration_fee' => 75000,
+                    'monthly_fee' => 125000,
                     'schedules' => [
-                        [
-                            'day' => 'tuesday',
-                            'start_time' => '18:30:00',
-                            'end_time' => '20:00:00',
-                        ],
-                        [
-                            'day' => 'thursday',
-                            'start_time' => '18:30:00',
-                            'end_time' => '20:00:00',
-                        ],
+                        ['day' => 'tuesday', 'start_time' => '18:30:00', 'end_time' => '20:00:00'],
+                        ['day' => 'thursday', 'start_time' => '18:30:00', 'end_time' => '20:00:00'],
                     ],
                     'students' => [
                         ['name' => 'Dimas Menengah', 'email' => 'dimas.menengah@example.com', 'status' => 'present'],
@@ -110,17 +83,11 @@ class AttendanceSimulationSeeder extends Seeder
                 [
                     'name' => 'Kelas Lanjutan',
                     'description' => 'Room untuk siswa tingkat lanjutan.',
+                    'registration_fee' => 100000,
+                    'monthly_fee' => 150000,
                     'schedules' => [
-                        [
-                            'day' => 'friday',
-                            'start_time' => '19:00:00',
-                            'end_time' => '20:30:00',
-                        ],
-                        [
-                            'day' => 'sunday',
-                            'start_time' => '08:00:00',
-                            'end_time' => '09:30:00',
-                        ],
+                        ['day' => 'friday', 'start_time' => '19:00:00', 'end_time' => '20:30:00'],
+                        ['day' => 'sunday', 'start_time' => '08:00:00', 'end_time' => '09:30:00'],
                     ],
                     'students' => [
                         ['name' => 'Gilang Lanjutan', 'email' => 'gilang.lanjutan@example.com', 'status' => 'present'],
@@ -139,14 +106,14 @@ class AttendanceSimulationSeeder extends Seeder
                         'name' => $roomData['name'],
                     ],
                     [
-                        'dojang_id' => $dojang->id,
-                        'name' => $roomData['name'],
                         'description' => $roomData['description'],
+                        'registration_fee' => $roomData['registration_fee'],
+                        'monthly_fee' => $roomData['monthly_fee'],
                         'is_active' => true,
                     ]
                 );
 
-                foreach ($roomData['schedules'] as $scheduleData) {
+                foreach ($roomData['schedules'] as $scheduleIndex => $scheduleData) {
                     $schedule = Schedule::updateOrCreate(
                         [
                             'room_id' => $room->id,
@@ -154,13 +121,7 @@ class AttendanceSimulationSeeder extends Seeder
                             'start_time' => $scheduleData['start_time'],
                             'end_time' => $scheduleData['end_time'],
                         ],
-                        [
-                            'room_id' => $room->id,
-                            'day' => $scheduleData['day'],
-                            'start_time' => $scheduleData['start_time'],
-                            'end_time' => $scheduleData['end_time'],
-                            // 'is_active' => true,
-                        ]
+                        $scheduleData
                     );
 
                     foreach ($roomData['students'] as $studentData) {
@@ -170,43 +131,31 @@ class AttendanceSimulationSeeder extends Seeder
                                 'name' => $studentData['name'],
                                 'password' => Hash::make('password'),
                                 'dojang_id' => $dojang->id,
-                                'qr_token' => Str::uuid()->toString(),
                             ]
                         );
 
+                        if (! $student->qr_token) {
+                            $student->forceFill([
+                                'qr_token' => (string) Str::uuid(),
+                            ])->save();
+                        }
+
                         $student->syncRoles(['student']);
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Attach student to room
-                        |--------------------------------------------------------------------------
-                        | Jika nama pivot Anda berbeda, sesuaikan bagian ini.
-                        |--------------------------------------------------------------------------
-                        */
                         DB::table('room_user')->updateOrInsert(
                             [
                                 'room_id' => $room->id,
                                 'user_id' => $student->id,
                             ],
                             [
+                                'joined_at' => now()->toDateString(),
                                 'is_active' => true,
                                 'created_at' => now(),
                                 'updated_at' => now(),
                             ]
                         );
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Attendance sample
-                        |--------------------------------------------------------------------------
-                        | Hanya schedule pertama di setiap room yang dibuatkan sample attendance.
-                        | Siswa dengan status null sengaja tidak dibuatkan record attendance.
-                        |--------------------------------------------------------------------------
-                        */
-                        if (
-                            $scheduleData === $roomData['schedules'][0]
-                            && $studentData['status'] !== null
-                        ) {
+                        if ($scheduleIndex === 0 && $studentData['status'] !== null) {
                             Attendance::updateOrCreate(
                                 [
                                     'schedule_id' => $schedule->id,

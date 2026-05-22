@@ -27,8 +27,8 @@ return [
         'description' => 'Fitur penggunaan domain khusus untuk dojang.',
     ],
     [
-        'code' => 'whatsapp_remainder',
-        'name' => 'WhatsApp Remainder',
-        'description' => 'Fitur notifikasi WhatsApp untuk siswa atau owner.',
+        'code' => 'whatsapp_reminder',
+        'name' => 'WhatsApp Reminder',
+        'description' => 'Fitur reminder WhatsApp untuk owner atau pelatih.',
     ],
 ];

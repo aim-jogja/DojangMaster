@@ -32,176 +32,263 @@ const formatCurrency = (value) => {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
+            <div class="flex items-center gap-2 min-w-0">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5 text-indigo-500 shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 18.75h19.5M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5H3V6.75z"
+                    />
+                </svg>
+
+                <h2 class="font-semibold text-gray-800 text-base truncate">
                     Tambah Pembayaran Siswa
                 </h2>
+            </div>
+        </template>
+
+        <div class="space-y-5">
+            <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                    <p class="font-mono text-xs font-semibold text-indigo-700">
+                        {{ bill.invoice_number }}
+                    </p>
+
+                    <h1 class="mt-1 text-2xl font-bold text-gray-900 truncate">
+                        Tambah Pembayaran
+                    </h1>
+
+                    <p class="text-sm text-gray-500 mt-0.5">
+                        Input pembayaran untuk tagihan siswa
+                    </p>
+                </div>
 
                 <Link
                     :href="route('student-bills.show', bill.id)"
-                    class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors shrink-0"
                 >
                     Kembali
                 </Link>
             </div>
-        </template>
 
-        <div class="py-6">
-            <div class="mx-auto max-w-4xl space-y-6 sm:px-6 lg:px-8">
-                <!-- Bill Info -->
-                <div class="rounded-xl bg-white p-6 shadow-sm">
-                    <div class="flex items-start justify-between gap-4">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+                <div class="lg:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between gap-4">
                         <div>
-                            <div class="text-sm text-gray-500">
-                                {{ bill.invoice_number }}
-                            </div>
-                            <h3 class="mt-1 text-xl font-semibold text-gray-900">
-                                {{ bill.title }}
+                            <h3 class="text-sm font-semibold text-gray-800">
+                                Informasi Tagihan
                             </h3>
-                            <div class="mt-1 text-sm text-gray-500">
-                                {{ bill.category?.name || 'Tanpa kategori' }}
+                            <p class="text-xs text-gray-400 mt-0.5">
+                                Pastikan data tagihan sudah benar sebelum mencatat pembayaran
+                            </p>
+                        </div>
+
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold uppercase shrink-0">
+                            {{ bill.student?.name?.charAt(0) ?? 'S' }}
+                        </div>
+                    </div>
+
+                    <div class="p-5">
+                        <dl class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                                <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Tagihan
+                                </dt>
+                                <dd class="mt-1 text-sm font-semibold text-gray-900">
+                                    {{ bill.title }}
+                                </dd>
+                                <dd class="text-xs text-gray-400">
+                                    {{ bill.category?.name || 'Tanpa kategori' }}
+                                </dd>
+                            </div>
+
+                            <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                                <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Siswa
+                                </dt>
+                                <dd class="mt-1 text-sm font-semibold text-gray-900">
+                                    {{ bill.student?.name || '-' }}
+                                </dd>
+                                <dd class="text-xs text-gray-400">
+                                    {{ bill.student?.email || '-' }}
+                                </dd>
+                            </div>
+
+                            <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                                <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Dojang / Room
+                                </dt>
+                                <dd class="mt-1 text-sm font-semibold text-gray-900">
+                                    {{ bill.dojang?.name || '-' }}
+                                </dd>
+                                <dd class="text-xs text-gray-400">
+                                    {{ bill.room?.name || '-' }}
+                                </dd>
+                            </div>
+
+                            <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                                <dt class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                    Sudah Dibayar
+                                </dt>
+                                <dd class="mt-1 text-sm font-semibold text-gray-900">
+                                    {{ formatCurrency(bill.paid_amount) }}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="px-5 py-4 border-b border-gray-100">
+                        <h3 class="text-sm font-semibold text-gray-800">
+                            Ringkasan Nominal
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            Nominal tagihan dan sisa pembayaran
+                        </p>
+                    </div>
+
+                    <div class="p-5 space-y-4">
+                        <div class="rounded-xl border border-gray-100 bg-gray-50/60 p-4">
+                            <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                Total Tagihan
+                            </p>
+                            <p class="mt-1 text-lg font-bold text-gray-900">
+                                {{ formatCurrency(bill.amount) }}
+                            </p>
+                        </div>
+
+                        <div class="rounded-xl border border-red-100 bg-red-50/60 p-4">
+                            <p class="text-xs font-semibold uppercase tracking-widest text-red-400">
+                                Sisa Tagihan
+                            </p>
+                            <p class="mt-1 text-2xl font-bold text-red-700">
+                                {{ formatCurrency(bill.remaining_amount) }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form
+                @submit.prevent="submit"
+                class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden"
+            >
+                <div class="px-5 py-4 border-b border-gray-100">
+                    <h3 class="text-sm font-semibold text-gray-800">
+                        Form Pembayaran
+                    </h3>
+                    <p class="text-xs text-gray-400 mt-0.5">
+                        Masukkan nominal, metode, tanggal, dan catatan pembayaran
+                    </p>
+                </div>
+
+                <div class="p-5 space-y-5">
+                    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                Nominal Pembayaran
+                            </label>
+
+                            <input
+                                v-model="form.amount"
+                                type="number"
+                                min="1"
+                                :max="bill.remaining_amount"
+                                class="w-full rounded-lg border-gray-200 text-sm text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+
+                            <p class="mt-1.5 text-xs text-gray-400">
+                                Maksimal: {{ formatCurrency(bill.remaining_amount) }}
+                            </p>
+
+                            <div v-if="form.errors.amount" class="mt-1.5 text-xs font-medium text-red-600">
+                                {{ form.errors.amount }}
                             </div>
                         </div>
 
-                        <div class="text-right">
-                            <div class="text-sm text-gray-500">
-                                Sisa Tagihan
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                Metode Pembayaran
+                            </label>
+
+                            <select
+                                v-model="form.payment_method"
+                                class="w-full rounded-lg border-gray-200 text-sm text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            >
+                                <option
+                                    v-for="(label, value) in paymentMethods"
+                                    :key="value"
+                                    :value="value"
+                                >
+                                    {{ label }}
+                                </option>
+                            </select>
+
+                            <div v-if="form.errors.payment_method" class="mt-1.5 text-xs font-medium text-red-600">
+                                {{ form.errors.payment_method }}
                             </div>
-                            <div class="text-xl font-bold text-red-700">
-                                {{ formatCurrency(bill.remaining_amount) }}
+                        </div>
+
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-gray-400">
+                                Tanggal Bayar
+                            </label>
+
+                            <input
+                                v-model="form.paid_at"
+                                type="date"
+                                class="w-full rounded-lg border-gray-200 text-sm text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+
+                            <div v-if="form.errors.paid_at" class="mt-1.5 text-xs font-medium text-red-600">
+                                {{ form.errors.paid_at }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-6 grid gap-4 md:grid-cols-2">
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Siswa</div>
-                            <div class="mt-1 font-medium text-gray-900">
-                                {{ bill.student?.name || '-' }}
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                {{ bill.student?.email || '-' }}
-                            </div>
-                        </div>
+                    <div>
+                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-gray-400">
+                            Catatan
+                        </label>
 
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Dojang / Room</div>
-                            <div class="mt-1 font-medium text-gray-900">
-                                {{ bill.dojang?.name || '-' }}
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                {{ bill.room?.name || '-' }}
-                            </div>
-                        </div>
+                        <textarea
+                            v-model="form.note"
+                            rows="4"
+                            class="w-full rounded-lg border-gray-200 text-sm text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            placeholder="Contoh: Dibayar tunai setelah latihan"
+                        />
 
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Nominal Tagihan</div>
-                            <div class="mt-1 font-semibold text-gray-900">
-                                {{ formatCurrency(bill.amount) }}
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Sudah Dibayar</div>
-                            <div class="mt-1 font-semibold text-gray-900">
-                                {{ formatCurrency(bill.paid_amount) }}
-                            </div>
+                        <div v-if="form.errors.note" class="mt-1.5 text-xs font-medium text-red-600">
+                            {{ form.errors.note }}
                         </div>
                     </div>
                 </div>
 
-                <!-- Payment Form -->
-                <form
-                    @submit.prevent="submit"
-                    class="space-y-6 rounded-xl bg-white p-6 shadow-sm"
-                >
-                    <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                            Nominal Pembayaran
-                        </label>
-                        <input
-                            v-model="form.amount"
-                            type="number"
-                            min="1"
-                            :max="bill.remaining_amount"
-                            class="w-full rounded-lg border-gray-300"
-                        />
-                        <div v-if="form.errors.amount" class="mt-1 text-sm text-red-600">
-                            {{ form.errors.amount }}
-                        </div>
-                        <div class="mt-1 text-xs text-gray-500">
-                            Maksimal pembayaran: {{ formatCurrency(bill.remaining_amount) }}
-                        </div>
-                    </div>
+                <div class="px-5 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-end gap-2">
+                    <Link
+                        :href="route('student-bills.show', bill.id)"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+                    >
+                        Batal
+                    </Link>
 
-                    <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                            Metode Pembayaran
-                        </label>
-                        <select
-                            v-model="form.payment_method"
-                            class="w-full rounded-lg border-gray-300"
-                        >
-                            <option
-                                v-for="(label, value) in paymentMethods"
-                                :key="value"
-                                :value="value"
-                            >
-                                {{ label }}
-                            </option>
-                        </select>
-                        <div v-if="form.errors.payment_method" class="mt-1 text-sm text-red-600">
-                            {{ form.errors.payment_method }}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                            Tanggal Bayar
-                        </label>
-                        <input
-                            v-model="form.paid_at"
-                            type="date"
-                            class="w-full rounded-lg border-gray-300"
-                        />
-                        <div v-if="form.errors.paid_at" class="mt-1 text-sm text-red-600">
-                            {{ form.errors.paid_at }}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                            Catatan
-                        </label>
-                        <textarea
-                            v-model="form.note"
-                            rows="4"
-                            class="w-full rounded-lg border-gray-300"
-                            placeholder="Contoh: Dibayar tunai setelah latihan"
-                        />
-                        <div v-if="form.errors.note" class="mt-1 text-sm text-red-600">
-                            {{ form.errors.note }}
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end gap-3">
-                        <Link
-                            :href="route('student-bills.show', bill.id)"
-                            class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                        >
-                            Batal
-                        </Link>
-
-                        <button
-                            type="submit"
-                            :disabled="form.processing"
-                            class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
-                        >
-                            Simpan Pembayaran
-                        </button>
-                    </div>
-                </form>
-            </div>
+                    <button
+                        type="submit"
+                        :disabled="form.processing"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-indigo-700 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {{ form.processing ? 'Menyimpan...' : 'Simpan Pembayaran' }}
+                    </button>
+                </div>
+            </form>
         </div>
     </AuthenticatedLayout>
 </template>

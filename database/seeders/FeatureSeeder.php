@@ -2,18 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Feature;
+use Illuminate\Database\Seeder;
 
 class FeatureSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        foreach (config('features') as $feature) {
+        $features = config('features', []);
+
+        foreach ($features as $feature) {
             Feature::updateOrCreate(
                 ['code' => $feature['code']],
                 [

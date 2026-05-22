@@ -11,9 +11,12 @@ class DojangSubscriptionSeeder extends Seeder
 {
     public function run(): void
     {
-        $freePlan = SubscriptionPlan::where('code', 'free')->first();
+        $freePlan = SubscriptionPlan::query()
+            ->where('code', 'free')
+            ->first();
 
         if (! $freePlan) {
+            $this->command?->warn('Plan free belum ditemukan. Jalankan SubscriptionPlanSeeder terlebih dahulu.');
             return;
         }
 
@@ -21,13 +24,15 @@ class DojangSubscriptionSeeder extends Seeder
             ->whereDoesntHave('subscription')
             ->chunkById(100, function ($dojangs) use ($freePlan) {
                 foreach ($dojangs as $dojang) {
-                    DojangSubscription::create([
-                        'dojang_id' => $dojang->id,
-                        'subscription_plan_id' => $freePlan->id,
-                        'started_at' => now()->toDateString(),
-                        'expired_at' => null,
-                        'status' => 'free',
-                    ]);
+                    DojangSubscription::updateOrCreate(
+                        ['dojang_id' => $dojang->id],
+                        [
+                            'subscription_plan_id' => $freePlan->id,
+                            'started_at' => now()->toDateString(),
+                            'expired_at' => null,
+                            'status' => 'free',
+                        ]
+                    );
                 }
             });
     }

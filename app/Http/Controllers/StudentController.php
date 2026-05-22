@@ -136,7 +136,12 @@ class StudentController extends Controller
         $validated = $request->validate([
             'dojang_id' => ['required', 'exists:dojangs,id'],
             'room_ids' => ['nullable', 'array'],
-            'room_ids.*' => ['exists:rooms,id'],
+            'room_ids.*' => [
+                'integer',
+                Rule::exists('rooms', 'id')->where(function ($query) use ($request) {
+                    $query->where('dojang_id', $request->dojang_id);
+                }),
+            ],
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
